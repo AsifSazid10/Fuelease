@@ -107,6 +107,10 @@ async updateOperatorData(id: number, data: Partial<Operator>): Promise<Operator>
   if (!operator) throw new NotFoundException('Operator not found');
   return operator;
 }
+
+async findAllOperators(): Promise<Operator[]> {
+  return this.operatorRepository.find();
+}
   // operator.service.ts
 async findByEmailname(email: string): Promise<Partial<Operator>> {
   const operator = await this.operatorRepository.findOne({

@@ -37,7 +37,7 @@ export class OperatorController {
 
 @Put('update/:id')
   @UseGuards(AuthGuard)
-  update(
+  updateOperatorData(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Partial<Operator>,
  ) {
@@ -115,6 +115,13 @@ async findByEmail(@Param('email') email: string) {
 async findByEmailname(@Param('email') email: string) {
   return this.operatorService.findByEmail(email);
 }
+
+@Get()
+@UseGuards(AuthGuard)
+async findAllOperators() {
+  return this.operatorService.findAllOperators();
+}
+
 
 @Get('profile')
 @UseGuards(AuthGuard)
