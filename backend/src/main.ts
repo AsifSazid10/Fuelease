@@ -2,9 +2,15 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import session from "express-session";
 import { ValidationPipe } from "@nestjs/common";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { join } from "path";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+  prefix: '/uploads/',
+});
 
   // Enable CORS
   app.enableCors({
@@ -13,12 +19,12 @@ async function bootstrap() {
     credentials: true,
   });
 
- // ✅ Enable global validation with auto type conversion
+ 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,       
       forbidNonWhitelisted: true, 
-      transform: true,        // <--- important: convert strings to numbers/dates
+      transform: true,       
     }),
   );
   await app.listen(3000); 

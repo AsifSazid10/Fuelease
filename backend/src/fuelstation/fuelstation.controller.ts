@@ -4,6 +4,7 @@ import { FuelStation } from './fuelstation.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { FuelStationService } from './fuelstation.service';
 import { CreateFuelStationDto } from './createfuelstation.dto';
+import { UpdateFuelStationDto } from './updatefuelstation.dto';
 
 
 @Controller('fuel-stations')
@@ -28,13 +29,13 @@ export class FuelStationController {
   }
   
   @Put(':id')
-  @UseGuards(AuthGuard)
-  async replaceFuelStation(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() newData: FuelStation,
-  ): Promise<FuelStation> {
-    return await this.fuelStationService.updateFuelStation(id, newData);
-  }
+@UseGuards(AuthGuard)
+async replaceFuelStation(
+  @Param('id', ParseIntPipe) id: number,
+  @Body() updateData: UpdateFuelStationDto,
+): Promise<FuelStation> {
+  return await this.fuelStationService.updateFuelStation(id, updateData);
+}
 
   // Delete fuel station by ID
   @Delete(':id')
